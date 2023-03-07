@@ -8,9 +8,10 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
+    // Easier to test
+    email: 'admin@example.com',
+    password: 'admin',
+    remember: true,
 });
 
 const submit = () => {

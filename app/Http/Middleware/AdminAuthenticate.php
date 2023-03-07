@@ -21,14 +21,11 @@ class AdminAuthenticate extends Middleware
      */
     public function handle($request, Closure $next, ...$guards): mixed
     {
-        /** @var User $user */
-        $user = Auth::user();
-
-        if (!$user->isRole(RoleEnum::ADMIN)) {
-            return redirect()->route('admin.login');
+        if (Auth::check() && Auth::user()->isRole(RoleEnum::ADMIN)) {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect()->route('admin.login');
     }
 
     /**

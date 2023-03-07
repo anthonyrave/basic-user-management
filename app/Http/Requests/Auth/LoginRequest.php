@@ -45,7 +45,7 @@ class LoginRequest extends FormRequest
 
         $user = User::whereEmail($this->str('email'))->first();
 
-        if ($user->deleted) {
+        if ($user->trahsed()) {
             throw ValidationException::withMessages([
                 'email' => trans('auth.deleted'),
             ]);

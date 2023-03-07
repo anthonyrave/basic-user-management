@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::prefix('admin')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('admin.users')->middleware('auth', 'admin');
+    Route::middleware(['admin'])->group(static function () {
+        Route::get('/', [UserController::class, 'index'])->name('admin.users');
+        Route::delete('/', [UserController::class, 'delete']);
+        Route::post('/restore', [UserController::class, 'restore'])->name('admin.users.restore');
+    });
 
     Route::get('/login', [AuthenticationController::class, 'create'])->name('admin.login');
     Route::post('/login', [AuthenticationController::class, 'store']);
