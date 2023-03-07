@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enum\RoleEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Admin\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class AuthenticationController extends Controller
@@ -18,15 +18,13 @@ class AuthenticationController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Login', [
-            'status' => session('status'),
-        ]);
+        return Inertia::render('Admin/Login');
     }
 
     /**
      * Handle an incoming authentication request.
-     * 
-     * @throws \Illuminate\Validation\ValidationException
+     *
+     * @throws ValidationException
      */
     public function store(LoginRequest $request): RedirectResponse
     {

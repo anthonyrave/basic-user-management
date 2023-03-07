@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,5 +66,14 @@ class User extends Authenticatable
         $this->deleted = true;
         $this->deleted_at = Carbon::now();
         $this->save();
+    }
+
+    /**
+     * @param RoleEnum $role
+     * @return bool
+     */
+    public function isRole(RoleEnum $role): bool
+    {
+        return (bool)$this->roles()->whereName($role)->count();
     }
 }

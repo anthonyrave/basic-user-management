@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enum\RoleEnum;
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -35,11 +37,25 @@ class LoginRequest extends FormRequest
     /**
      * Attempt to authenticate the request's credentials.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+
+        $user = User::whereEmail($this->str('email'))->first();
+
+        if ($user->deleted) {
+            throw ValidationException::withMessages([
+                'email' => trans('auth.deleted'),
+            ]);
+        }
+
+        if (!$user->isRole(RoleEnum::DEFAULT)) {
+            throw ValidationException::withMessages([
+                'email' => trans('auth.userIsOnlyAdmin'),
+            ]);
+        }
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
@@ -55,7 +71,7 @@ class LoginRequest extends FormRequest
     /**
      * Ensure the login request is not rate limited.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureIsNotRateLimited(): void
     {

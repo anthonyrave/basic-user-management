@@ -16,5 +16,6 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'deleted' => 'This account has been deleted.'
+    'deleted' => 'This account has been deleted.',
+    'userIsOnlyAdmin' => 'This email address is only associated with an Admin account.',
 ];

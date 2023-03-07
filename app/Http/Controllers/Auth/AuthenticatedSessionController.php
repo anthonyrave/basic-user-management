@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
@@ -29,19 +28,11 @@ class AuthenticatedSessionController extends Controller
 
     /**
      * Handle an incoming authentication request.
-     * 
-     * @throws \Illuminate\Validation\ValidationException
+     *
+     * @throws ValidationException
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $user = User::where('email', '=', $request->email)->first();
-
-        if ($user?->deleted) {
-            throw ValidationException::withMessages([
-                'email' => trans('auth.deleted'),
-            ]);
-        }
-
         $request->authenticate();
 
         $request->session()->regenerate();
