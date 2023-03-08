@@ -1,9 +1,21 @@
 ## Installation
 
-Exécuter la commande suivante:
+Exécuter les commandes suivantes:
 
 ```bash
 $ composer install
+```
+
+```bash
+$ cp .env.example .env
+```
+
+```bash
+$ php artisan key:generate
+```
+
+```bash
+$ npm install && npm run dev
 ```
 
 Lancement des migrations et ajout des utilisateurs par défaut :
