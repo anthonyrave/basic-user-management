@@ -43,9 +43,15 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $user = User::whereEmail($this->str('email'))->first();
+        $user = User::whereEmail($this->str('email'))->withTrashed()->first();
 
-        if ($user->trahsed()) {
+        if ($user === null) {
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
+
+        if ($user->trashed()) {
             throw ValidationException::withMessages([
                 'email' => trans('auth.deleted'),
             ]);

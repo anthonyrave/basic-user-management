@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->group(function () {
     Route::middleware(['admin'])->group(static function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.users');
+        Route::get('/new', [UserController::class, 'create'])->name('admin.users.new');
+        Route::post('/new', [UserController::class, 'store']);
         Route::delete('/', [UserController::class, 'delete']);
         Route::post('/restore', [UserController::class, 'restore'])->name('admin.users.restore');
     });

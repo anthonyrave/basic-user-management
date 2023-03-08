@@ -5,6 +5,8 @@ import Modal from "@/Components/Modal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import {ref} from "vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { Link } from '@inertiajs/vue3';
 
 defineProps({
     users: Array,
@@ -66,6 +68,13 @@ const closeModal = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900 dark:text-gray-100">
+                        <div class="flex justify-end mb-4">
+                            <Link :href="route('admin.users.new')">
+                                <PrimaryButton>
+                                    Add new user
+                                </PrimaryButton>
+                            </Link>
+                        </div>
                         <div class="grid grid-cols-12 gap-4 p-4 uppercase bg-gray-200 dark:bg-gray-600">
                             <div class="col-span-2">Name</div>
                             <div class="col-span-4">Email</div>
